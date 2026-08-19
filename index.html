@@ -706,7 +706,7 @@
     </div>
 
     <div class="rail">
-      <div class="portrait"><img class="portrait-still" src="avatar-end.png" width="460" height="460" alt="Avatar ilustrado de Guzmán GP"><video class="portrait-motion" src="avatar.mp4" poster="avatar.png" autoplay muted playsinline preload="auto" aria-hidden="true"></video></div>
+      <div class="portrait"><img class="portrait-still" src="avatar-end.png" width="460" height="460" alt="Avatar ilustrado de Guzmán GP"><video class="portrait-motion" src="avatar.mp4" data-delay="4000" poster="avatar.png" muted playsinline preload="auto" aria-hidden="true"></video></div>
       <dl>
         <dt class="label" data-en="Now">Ahora</dt>
         <dd data-en="BBVA — AI Department">BBVA — Departamento de IA</dd>
@@ -1161,6 +1161,32 @@
   });
   window.addEventListener("resize", sync);
   sync();
+})();
+</script>
+
+<script>
+(function () {
+  var clip = document.querySelector(".portrait-motion");
+  if (!clip) return;
+  var espera = Number(clip.dataset.delay) || 0;
+  var listo = false, reproducido = false;
+
+  function arrancar() {
+    if (!listo || reproducido) return;
+    reproducido = true;
+    // el navegador puede restaurar la posición de una visita anterior
+    try { clip.currentTime = 0; } catch (e) {}
+    var intento = clip.play();
+    if (intento && intento.catch) intento.catch(function () { reproducido = false; });
+  }
+
+  clip.pause();
+  setTimeout(function () { listo = true; arrancar(); }, espera);
+
+  // si al cumplirse el plazo la pestaña estaba en segundo plano, arranca al volver
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) arrancar();
+  });
 })();
 </script>
 
