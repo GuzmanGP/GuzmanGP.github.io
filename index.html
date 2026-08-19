@@ -515,6 +515,24 @@
     transition: transform .18s ease, filter .18s ease;
   }
   .cta:hover { transform: translateY(-2px); filter: saturate(1.15); }
+  .cta-copy {
+    border: 0;
+    cursor: pointer;
+    font-family: var(--f-display);
+    gap: 1rem;
+  }
+  .cta-copy-mail { overflow-wrap: anywhere; }
+  .cta-copy-icon { flex: none; opacity: .8; }
+  .cta-copy:hover .cta-copy-icon { opacity: 1; }
+  .copy-status {
+    min-height: 1.1em;
+    margin: 0;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .copy-status.is-on { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .copy-status { transition: none; } }
   .cta .arrow { transition: transform .18s ease; }
   .cta:hover .arrow { transform: translateX(4px); }
   @media (prefers-reduced-motion: reduce) {
@@ -712,9 +730,11 @@
         <h2 data-en="If you have an idea in mind, write to me.">Si tienes alguna idea en mente, escríbeme.</h2>
       </div>
       <div class="cta-stack">
-        <a class="cta" href="mailto:guzmangomezp1@gmail.com" data-en="Email: guzmangomezp1@gmail.com <span class=&quot;arrow&quot; aria-hidden=&quot;true&quot;>→</span>">
-          Correo: guzmangomezp1@gmail.com <span class="arrow" aria-hidden="true">→</span>
-        </a>
+        <button class="cta cta-copy" type="button" data-email="guzmangomezp1@gmail.com" aria-label="Copiar dirección de correo">
+          <span class="cta-copy-mail">guzmangomezp1@gmail.com</span>
+          <svg class="cta-copy-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+        </button>
+        <p class="copy-status label" role="status" aria-live="polite"></p>
       </div>
     </div>
   </div>
@@ -881,6 +901,53 @@
 
   // red de seguridad: el contenido nunca se queda oculto
   setTimeout(revealAll, 6000);
+})();
+</script>
+
+<script>
+(function () {
+  var button = document.querySelector(".cta-copy");
+  var status = document.querySelector(".copy-status");
+  if (!button || !status) return;
+  var address = button.dataset.email;
+  var timer;
+
+  function say(text) {
+    status.textContent = text;
+    status.classList.add("is-on");
+    clearTimeout(timer);
+    timer = setTimeout(function () { status.classList.remove("is-on"); }, 2600);
+  }
+
+  function fallbackCopy() {
+    var field = document.createElement("textarea");
+    field.value = address;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.appendChild(field);
+    field.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(field);
+    return ok;
+  }
+
+  button.addEventListener("click", function () {
+    var english = document.documentElement.lang === "en";
+    var done = english ? "Copied" : "Copiado";
+    var failed = english ? "Copy it by hand" : "Cópialo a mano";
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(address).then(function () {
+        say(done);
+      }, function () {
+        say(fallbackCopy() ? done : failed);
+      });
+    } else {
+      say(fallbackCopy() ? done : failed);
+    }
+  });
 })();
 </script>
 
