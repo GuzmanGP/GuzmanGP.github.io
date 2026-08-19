@@ -507,8 +507,10 @@
     font-family: var(--f-display);
     font-weight: 700;
     letter-spacing: -.015em;
-    font-size: 1.05rem;
+    font-size: clamp(.95rem, 2.6vw, 1.05rem);
     padding: .95rem 1.6rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     transition: transform .18s ease, filter .18s ease;
   }
   .cta:hover { transform: translateY(-2px); filter: saturate(1.15); }
@@ -586,7 +588,7 @@
     </div>
 
     <div class="rail">
-      <div class="portrait"><img src="avatar.png" width="460" height="460" alt="Avatar ilustrado de Guzmán GP"></div>
+      <div class="portrait"><img src="avatar.png" width="460" height="460" width="460" height="460" alt="Avatar ilustrado de Guzmán GP"></div>
       <dl>
         <dt class="label" data-en="Now">Ahora</dt>
         <dd data-en="BBVA — AI Department">BBVA — Departamento de IA</dd>
@@ -709,10 +711,9 @@
         <h2 data-en="If you have an idea in mind, write to me.">Si tienes alguna idea en mente, escríbeme.</h2>
       </div>
       <div class="cta-stack">
-        <a class="cta" href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer" data-en="Let us talk on LinkedIn <span class=&quot;arrow&quot; aria-hidden=&quot;true&quot;>→</span>">
-          Hablemos por LinkedIn <span class="arrow" aria-hidden="true">→</span>
+        <a class="cta" href="mailto:guzmangomezp1@gmail.com" data-en="Email: guzmangomezp1@gmail.com <span class=&quot;arrow&quot; aria-hidden=&quot;true&quot;>→</span>">
+          Correo: guzmangomezp1@gmail.com <span class="arrow" aria-hidden="true">→</span>
         </a>
-        <a class="cta-alt" href="mailto:guzmangomezp1@gmail.com" data-en="or by email: guzmangomezp1@gmail.com">o por correo: guzmangomezp1@gmail.com</a>
       </div>
     </div>
   </div>
