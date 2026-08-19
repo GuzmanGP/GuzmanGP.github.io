@@ -354,6 +354,16 @@
   .prose p { margin: 0; }
 
   .pull em { font-style: normal; color: var(--ink); }
+  .pull .plain {
+    display: block;
+    margin-top: .85rem;
+    font-family: var(--f-body);
+    font-size: 1.02rem;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: var(--ink-soft);
+  }
   .pull {
     max-width: 30rem;
     font-family: var(--f-display);
@@ -602,7 +612,7 @@
       <p class="label" data-en="Approach">Enfoque</p>
       <h2 data-en="From the daily noise to something that works">Del ruido diario a algo que funciona</h2>
     </div>
-    <p class="pull" data-en="I look for <em>simple solutions</em>: scripts, scalable servers, databases and API connections — the essentials for your logic to run.">Busco <em>soluciones simples</em>: scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
+    <p class="pull" data-en="I look for <em>simple solutions</em>:<span class=&quot;plain&quot;>scripts, scalable servers, databases and API connections — the essentials for your logic to run.</span>">Busco <em>soluciones simples</em>:<span class="plain">scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</span></p>
   </div>
 </section>
 
