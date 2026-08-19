@@ -318,15 +318,13 @@
     gap: 1.3rem;
     padding-block: clamp(2.2rem, 5vw, 3.2rem) clamp(1.8rem, 4vw, 2.6rem);
   }
-  .plate-note {
-    margin: 0;
-    max-width: 46rem;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    text-wrap: pretty;
+  @media (min-width: 54rem) {
+    .stack-note {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
   }
-  .plate-note em { font-style: normal; color: var(--ink); }
 
   /* ---------- secciones ---------- */
 
@@ -352,6 +350,7 @@
   .prose { max-width: var(--measure); display: grid; gap: 1.15rem; }
   .prose p { margin: 0; }
 
+  .pull em { font-style: normal; color: var(--ink); }
   .pull {
     max-width: 30rem;
     font-family: var(--f-display);
@@ -565,7 +564,7 @@
       <p class="label" data-en="Approach">Enfoque</p>
       <h2 data-en="From the daily noise to something that works">Del ruido diario a algo que funciona</h2>
     </div>
-    <p class="plate-note" data-en="I look for <em>simple solutions</em>: scripts, scalable servers, databases and API connections — the essentials for your logic to run.">Busco <em>soluciones simples</em>: scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
+    <p class="pull" data-en="I look for <em>simple solutions</em>: scripts, scalable servers, databases and API connections — the essentials for your logic to run.">Busco <em>soluciones simples</em>: scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
   </div>
 </section>
 
