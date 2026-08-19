@@ -419,37 +419,38 @@
   }
   .slide p { margin: 0; font-size: .97rem; color: var(--ink-soft); }
 
-  .carousel-nav {
+  .carousel-dots {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: .2rem;
   }
-  .carousel-count {
-    min-width: 4ch;
-    text-align: center;
-    color: var(--ink);
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-    text-decoration-thickness: 1px;
-    text-underline-offset: .45em;
-  }
-  .carousel-btn {
-    font: inherit;
-    font-size: 1rem;
-    line-height: 1;
+  .dot-btn {
+    width: 2.75rem;          /* área de toque cómoda alrededor del punto */
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
     background: none;
-    color: var(--ink-soft);
-    border: 1px solid var(--rule);
-    padding: .5rem .85rem;
+    border: 0;
+    padding: 0;
     cursor: pointer;
-    transition: color .18s ease, border-color .18s ease;
   }
-  .carousel-btn:hover:not(:disabled) { color: var(--ink); border-color: var(--accent); }
-  .carousel-btn:disabled { opacity: .35; cursor: default; }
+  .dot-btn::before {
+    content: "";
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    border: 1px solid var(--ink-faint);
+    transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .dot-btn:hover::before { border-color: var(--ink); }
+  .dot-btn[aria-current="true"]::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.3);
+  }
   @media (prefers-reduced-motion: reduce) {
     .track { scroll-behavior: auto; }
-    .carousel-btn { transition: none; }
+    .dot-btn::before { transition: none; }
   }
 
   /* ---------- secciones ---------- */
@@ -873,11 +874,7 @@
           </div>
         </article>
       </div>
-      <div class="carousel-nav">
-        <button class="carousel-btn" type="button" data-dir="-1" aria-label="Proyecto anterior">←</button>
-        <p class="carousel-count label" aria-live="polite"></p>
-        <button class="carousel-btn" type="button" data-dir="1" aria-label="Proyecto siguiente">→</button>
-      </div>
+      <div class="carousel-dots" role="group" aria-label="Ir a un proyecto"></div>
     </div>
   </div>
 </section>
@@ -1160,16 +1157,18 @@
   var track = document.querySelector(".track");
   if (!track) return;
   var slides = [].slice.call(track.querySelectorAll(".slide"));
-  var count = document.querySelector(".carousel-count");
-  var buttons = [].slice.call(document.querySelectorAll(".carousel-btn"));
+  var dots = document.querySelector(".carousel-dots");
+  if (!dots || slides.length < 2) return;
 
-  // distancia real entre el borde de una tarjeta y el del carril: rect en vez
-  // de offsetLeft, que depende del ancestro posicionado
   function offsetOf(slide) {
     return slide.getBoundingClientRect().left - track.getBoundingClientRect().left;
   }
 
   function current() {
+    // en los extremos el carril no puede alinear la tarjeta al borde: el punto
+    // activo se decide por la posición del scroll, no por proximidad
+    if (track.scrollLeft <= 2) return 0;
+    if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2) return slides.length - 1;
     var best = 0, min = Infinity;
     slides.forEach(function (s, i) {
       var d = Math.abs(offsetOf(s));
@@ -1178,22 +1177,26 @@
     return best;
   }
 
-  function sync() {
-    var atStart = track.scrollLeft <= 2;
-    var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-    count.textContent = (current() + 1) + " / " + slides.length;
-    buttons.forEach(function (b) {
-      b.disabled = b.dataset.dir === "-1" ? atStart : atEnd;
-    });
-  }
-
-  buttons.forEach(function (b) {
+  var botones = slides.map(function (s, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "dot-btn";
+    var titulo = s.querySelector("h3");
+    b.setAttribute("aria-label", titulo ? titulo.textContent : "Proyecto " + (i + 1));
     b.addEventListener("click", function () {
-      var i = Math.max(0, Math.min(slides.length - 1, current() + Number(b.dataset.dir)));
       track.scrollBy({ left: offsetOf(slides[i]) });
       setTimeout(sync, 450);
     });
+    dots.appendChild(b);
+    return b;
   });
+
+  function sync() {
+    var i = current();
+    botones.forEach(function (b, j) {
+      b.setAttribute("aria-current", String(j === i));
+    });
+  }
 
   track.addEventListener("scroll", function () {
     clearTimeout(track._t);
