@@ -142,6 +142,35 @@
     background: var(--accent);
   }
 
+  .topbar-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .5rem 1.4rem;
+  }
+  .lang {
+    display: inline-flex;
+    align-items: baseline;
+    gap: .45rem;
+    font-family: var(--f-mono);
+    font-size: .68rem;
+    letter-spacing: .16em;
+  }
+  .lang span { color: var(--rule); }
+  .lang button {
+    font: inherit;
+    letter-spacing: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: var(--ink-faint);
+    transition: color .18s ease;
+  }
+  .lang button[aria-pressed="true"] { color: var(--ink); }
+  .lang button:hover { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { .lang button { transition: none; } }
+
   /* ---------- hero ---------- */
 
   .hero .wrap {
@@ -436,38 +465,45 @@
 <header class="topbar">
   <div class="wrap">
     <p class="wordmark">Guzmán&nbsp;GP</p>
-    <p class="label status"><span class="dot"></span>Abierto a proyectos</p>
+    <div class="topbar-right">
+      <p class="label status" data-en="Open to projects"><span class="dot"></span>Abierto a proyectos</p>
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <span aria-hidden="true">/</span>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap">
     <div>
-      <p class="label">Freelance · IA, datos y backend</p>
-      <h1>Te ayudo a crear<span class="cont">tu solución digital<span class="cursor"></span></span></h1>
-      <p class="lede">Más de <strong>8 años</strong> contribuyendo a muchas soluciones de IA en entornos corporativos; he sido ingeniero de IA en interfaces conversacionales, consultor de ciencia de datos y desarrollador backend senior.</p>
+      <p class="label" data-en="Freelance · AI, data and backend">Freelance · IA, datos y backend</p>
+      <h1 data-en="I help you build<span class=&quot;cont&quot;>your digital solution<span class=&quot;cursor&quot;></span></span>">Te ayudo a crear<span class="cont">tu solución digital<span class="cursor"></span></span></h1>
+      <p class="lede" data-en="Over <strong>8 years</strong> contributing to AI solutions in corporate environments; I have worked as an AI engineer on conversational interfaces, a data science consultant and a senior backend developer.">Más de <strong>8 años</strong> contribuyendo a muchas soluciones de IA en entornos corporativos; he sido ingeniero de IA en interfaces conversacionales, consultor de ciencia de datos y desarrollador backend senior.</p>
     </div>
 
     <div class="rail">
       <div class="portrait"><img src="avatar.png" width="460" height="460" alt="Avatar ilustrado de Guzmán GP"></div>
       <dl>
-        <dt class="label">Ahora</dt>
-        <dd>BBVA — Departamento de IA</dd>
+        <dt class="label" data-en="Now">Ahora</dt>
+        <dd data-en="BBVA — AI Department">BBVA — Departamento de IA</dd>
       </dl>
       <dl>
-        <dt class="label">Experiencia</dt>
-        <dd>8+ años en Inteligencia Artificial</dd>
+        <dt class="label" data-en="Experience">Experiencia</dt>
+        <dd data-en="8+ years in Artificial Intelligence">8+ años en Inteligencia Artificial</dd>
       </dl>
       <dl>
-        <dt class="label">Estudios</dt>
-        <dd>Ingeniero de Telecomunicaciones y Científico de Datos</dd>
+        <dt class="label" data-en="Education">Estudios</dt>
+        <dd data-en="Telecommunications Engineer and Data Scientist">Ingeniero de Telecomunicaciones y Científico de Datos</dd>
       </dl>
       <dl>
-        <dt class="label">Modalidad</dt>
-        <dd>Proyecto · Suscripción · Socio</dd>
+        <dt class="label" data-en="Engagement">Modalidad</dt>
+        <dd data-en="Project · Retainer · Partner">Proyecto · Suscripción · Socio</dd>
       </dl>
       <dl>
-        <dt class="label">Contacto</dt>
+        <dt class="label" data-en="Contact">Contacto</dt>
         <dd><a href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><br><a href="mailto:guzmangomezp1@gmail.com">guzmangomezp1@gmail.com</a></dd>
       </dl>
     </div>
@@ -476,13 +512,13 @@
 
 <section class="stack">
   <div class="wrap stack-note">
-    <p class="label">Del ruido diario a algo que funciona</p>
-    <p class="plate-note">Busco <em>soluciones simples</em>: evito los grandes workflows montados sobre programas con una curva de aprendizaje alta. Scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
+    <p class="label" data-en="From the daily noise to something that works">Del ruido diario a algo que funciona</p>
+    <p class="plate-note" data-en="I look for <em>simple solutions</em>: I avoid heavyweight workflows built on tools with a steep learning curve. Scripts, scalable servers, databases and API connections — the essentials for your logic to run.">Busco <em>soluciones simples</em>: evito los grandes workflows montados sobre programas con una curva de aprendizaje alta. Scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
   </div>
   <div class="ticker">
     <div class="ticker-track">
-      <span>MCP</span><span>agentes</span><span>RAG</span><span>LLMs</span><span>FastAPI</span><span>workflows</span><span>harnesses</span><span>escalabilidad</span><span>pipelines de datos</span><span>embeddings</span><span>spec-driven development</span><span>Claude Code</span><span>evaluación de LLM</span><span>vector stores</span><span>orquestación</span><span>APIs</span><span>automatización</span><span>generación de vídeo</span><span>generación de imágenes</span><span>avatares</span>
-      <span aria-hidden="true">MCP</span><span aria-hidden="true">agentes</span><span aria-hidden="true">RAG</span><span aria-hidden="true">LLMs</span><span aria-hidden="true">FastAPI</span><span aria-hidden="true">workflows</span><span aria-hidden="true">harnesses</span><span aria-hidden="true">escalabilidad</span><span aria-hidden="true">pipelines de datos</span><span aria-hidden="true">embeddings</span><span aria-hidden="true">spec-driven development</span><span aria-hidden="true">Claude Code</span><span aria-hidden="true">evaluación de LLM</span><span aria-hidden="true">vector stores</span><span aria-hidden="true">orquestación</span><span aria-hidden="true">APIs</span><span aria-hidden="true">automatización</span><span aria-hidden="true">generación de vídeo</span><span aria-hidden="true">generación de imágenes</span><span aria-hidden="true">avatares</span>
+      <span data-en="MCP">MCP</span><span data-en="agents">agentes</span><span data-en="RAG">RAG</span><span data-en="LLMs">LLMs</span><span data-en="FastAPI">FastAPI</span><span data-en="workflows">workflows</span><span data-en="harnesses">harnesses</span><span data-en="scalability">escalabilidad</span><span data-en="data pipelines">pipelines de datos</span><span data-en="embeddings">embeddings</span><span data-en="spec-driven development">spec-driven development</span><span data-en="Claude Code">Claude Code</span><span data-en="LLM evaluation">evaluación de LLM</span><span data-en="vector stores">vector stores</span><span data-en="orchestration">orquestación</span><span data-en="APIs">APIs</span><span data-en="automation">automatización</span><span data-en="video generation">generación de vídeo</span><span data-en="image generation">generación de imágenes</span><span data-en="avatars">avatares</span>
+      <span aria-hidden="true" data-en="MCP">MCP</span><span aria-hidden="true" data-en="agents">agentes</span><span aria-hidden="true" data-en="RAG">RAG</span><span aria-hidden="true" data-en="LLMs">LLMs</span><span aria-hidden="true" data-en="FastAPI">FastAPI</span><span aria-hidden="true" data-en="workflows">workflows</span><span aria-hidden="true" data-en="harnesses">harnesses</span><span aria-hidden="true" data-en="scalability">escalabilidad</span><span aria-hidden="true" data-en="data pipelines">pipelines de datos</span><span aria-hidden="true" data-en="embeddings">embeddings</span><span aria-hidden="true" data-en="spec-driven development">spec-driven development</span><span aria-hidden="true" data-en="Claude Code">Claude Code</span><span aria-hidden="true" data-en="LLM evaluation">evaluación de LLM</span><span aria-hidden="true" data-en="vector stores">vector stores</span><span aria-hidden="true" data-en="orchestration">orquestación</span><span aria-hidden="true" data-en="APIs">APIs</span><span aria-hidden="true" data-en="automation">automatización</span><span aria-hidden="true" data-en="video generation">generación de vídeo</span><span aria-hidden="true" data-en="image generation">generación de imágenes</span><span aria-hidden="true" data-en="avatars">avatares</span>
     </div>
   </div>
 </section>
@@ -490,12 +526,12 @@
 <section class="band">
   <div class="wrap two-col">
     <div class="section-head" style="margin-bottom:0">
-      <p class="label">El ritmo</p>
-      <h2>Nadie lo conoce todo. Yo tampoco.</h2>
+      <p class="label" data-en="The pace">El ritmo</p>
+      <h2 data-en="Nobody knows it all. Neither do I.">Nadie lo conoce todo. Yo tampoco.</h2>
     </div>
     <div class="prose">
-      <p class="pull">Es difícil seguir el ritmo a la cantidad de novedades digitales que salen cada día.</p>
-      <p>Ni yo mismo soy capaz de conocerlo todo. Lo que nunca me ha faltado es el tiempo y las ganas de conocer estas herramientas y ponerlas en práctica.</p>
+      <p class="pull" data-en="Keeping up with the flood of new digital tools coming out every day is hard.">Es difícil seguir el ritmo a la cantidad de novedades digitales que salen cada día.</p>
+      <p data-en="I cannot know all of it either. What I have never lacked is the time and the appetite to learn these tools and put them to work.">Ni yo mismo soy capaz de conocerlo todo. Lo que nunca me ha faltado es el tiempo y las ganas de conocer estas herramientas y ponerlas en práctica.</p>
     </div>
   </div>
 </section>
@@ -503,21 +539,21 @@
 <section class="band">
   <div class="wrap">
     <div class="section-head">
-      <p class="label">En qué puedo ayudarte</p>
-      <h2>Tres terrenos que conozco de primera mano.</h2>
+      <p class="label" data-en="How I can help">En qué puedo ayudarte</p>
+      <h2 data-en="Three grounds I know first-hand.">Tres terrenos que conozco de primera mano.</h2>
     </div>
     <div class="cards">
       <article class="card">
-        <h3>Soluciones de IA</h3>
-        <p>He contribuido a soluciones de IA en entornos corporativos, donde lo que se pide no es una demo sino algo que aguante en producción.</p>
+        <h3 data-en="AI solutions">Soluciones de IA</h3>
+        <p data-en="I have contributed to AI solutions in corporate environments, where what is asked for is not a demo but something that holds up in production.">He contribuido a soluciones de IA en entornos corporativos, donde lo que se pide no es una demo sino algo que aguante en producción.</p>
       </article>
       <article class="card">
-        <h3>Ciencia de datos</h3>
-        <p>Como consultor: entender los datos que ya tienes, sacarles una respuesta útil y saber cuándo el modelo no es la respuesta.</p>
+        <h3 data-en="Data science">Ciencia de datos</h3>
+        <p data-en="As a consultant: making sense of the data you already have, getting a useful answer out of it, and knowing when a model is not the answer.">Como consultor: entender los datos que ya tienes, sacarles una respuesta útil y saber cuándo el modelo no es la respuesta.</p>
       </article>
       <article class="card">
-        <h3>Backend</h3>
-        <p>Desarrollo backend senior. La parte que nadie ve y de la que depende que todo lo demás funcione.</p>
+        <h3 data-en="Backend">Backend</h3>
+        <p data-en="Senior backend development. The part nobody sees and everything else depends on.">Desarrollo backend senior. La parte que nadie ve y de la que depende que todo lo demás funcione.</p>
       </article>
     </div>
   </div>
@@ -526,21 +562,21 @@
 <section class="band">
   <div class="wrap">
     <div class="section-head">
-      <p class="label">Cómo trabajamos</p>
-      <h2>Tú eliges la fórmula.</h2>
+      <p class="label" data-en="How we work">Cómo trabajamos</p>
+      <h2 data-en="You pick the arrangement.">Tú eliges la fórmula.</h2>
     </div>
     <div class="modes">
       <div class="mode">
-        <h3>Pago por proyecto</h3>
-        <p>Tienes algo concreto en mente, acotado, definido, con principio y final. Lo dimensionamos y lo construyo.</p>
+        <h3 data-en="Per project">Pago por proyecto</h3>
+        <p data-en="You have something specific in mind, scoped and defined, with a beginning and an end. We size it and I build it.">Tienes algo concreto en mente, acotado, definido, con principio y final. Lo dimensionamos y lo construyo.</p>
       </div>
       <div class="mode">
-        <h3>Suscripción mensual</h3>
-        <p>¿Necesitas a alguien de forma continuada o tienes una idea difusa? Evolucionamos el producto, lo iteramos o lo mantenemos, resolviendo lo que aparezca.</p>
+        <h3 data-en="Monthly retainer">Suscripción mensual</h3>
+        <p data-en="Do you need someone on an ongoing basis, or is the idea still fuzzy? We grow the product, iterate on it or maintain it, sorting out whatever comes up.">¿Necesitas a alguien de forma continuada o tienes una idea difusa? Evolucionamos el producto, lo iteramos o lo mantenemos, resolviendo lo que aparezca.</p>
       </div>
       <div class="mode">
-        <h3>Como socio</h3>
-        <p>Si me convences ;) — entro en la idea y remamos juntos.</p>
+        <h3 data-en="As a partner">Como socio</h3>
+        <p data-en="If you convince me ;) — I join the idea and we row together.">Si me convences ;) — entro en la idea y remamos juntos.</p>
       </div>
     </div>
   </div>
@@ -550,15 +586,15 @@
   <div class="wrap">
     <div class="contact-inner">
       <div class="section-head" style="margin-bottom:0">
-        <p class="label">Contacto</p>
-        <h2>Si tienes alguna idea en mente, escríbeme.</h2>
-        <p class="lede" style="margin-top:.4rem">Actualmente trabajo en BBVA, en el departamento de IA. En mis ratos libres cojo algún que otro proyectillo.</p>
+        <p class="label" data-en="Contact">Contacto</p>
+        <h2 data-en="If you have an idea in mind, write to me.">Si tienes alguna idea en mente, escríbeme.</h2>
+        <p class="lede" style="margin-top:.4rem" data-en="I currently work at BBVA, in the AI department. In my spare time I take on the odd project.">Actualmente trabajo en BBVA, en el departamento de IA. En mis ratos libres cojo algún que otro proyectillo.</p>
       </div>
       <div class="cta-stack">
-        <a class="cta" href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer">
+        <a class="cta" href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer" data-en="Let us talk on LinkedIn <span class=&quot;arrow&quot; aria-hidden=&quot;true&quot;>→</span>">
           Hablemos por LinkedIn <span class="arrow" aria-hidden="true">→</span>
         </a>
-        <a class="cta-alt" href="mailto:guzmangomezp1@gmail.com">o escríbeme a guzmangomezp1@gmail.com</a>
+        <a class="cta-alt" href="mailto:guzmangomezp1@gmail.com" data-en="or email me at guzmangomezp1@gmail.com">o escríbeme a guzmangomezp1@gmail.com</a>
       </div>
     </div>
   </div>
@@ -566,10 +602,35 @@
 
 <footer>
   <div class="wrap">
-    <p class="label">Guzmán GP · IA, datos y backend</p>
+    <p class="label" data-en="Guzmán GP · AI, data and backend">Guzmán GP · IA, datos y backend</p>
     <p class="label"><a href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer">linkedin.com/in/guzman-gp</a> · <a href="mailto:guzmangomezp1@gmail.com">guzmangomezp1@gmail.com</a></p>
   </div>
 </footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var nodes = [].slice.call(document.querySelectorAll("[data-en]"));
+  nodes.forEach(function (n) { n.dataset.es = n.innerHTML; });
+  var buttons = [].slice.call(document.querySelectorAll(".lang button"));
+
+  function apply(lang) {
+    root.lang = lang;
+    nodes.forEach(function (n) { n.innerHTML = lang === "en" ? n.dataset.en : n.dataset.es; });
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+    try { localStorage.setItem("gp-lang", lang); } catch (e) {}
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { apply(b.dataset.lang); });
+  });
+
+  var saved = null;
+  try { saved = localStorage.getItem("gp-lang"); } catch (e) {}
+  var initial = saved || ((navigator.language || "es").toLowerCase().indexOf("es") === 0 ? "es" : "en");
+  apply(initial);
+})();
+</script>
 
 </body>
 </html>
