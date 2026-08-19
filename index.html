@@ -141,12 +141,18 @@
     border-bottom: 1px solid var(--rule);
   }
   .topbar .wrap {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .75rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: baseline;
-    justify-content: space-between;
+    gap: .6rem 1.5rem;
     padding-block: 1.1rem;
+  }
+  .topbar .wordmark { justify-self: start; }
+  .topbar .status   { justify-self: center; }
+  .topbar .lang     { justify-self: end; }
+  @media (max-width: 40rem) {
+    .topbar .wrap { grid-template-columns: auto auto; }
+    .topbar .status { grid-column: 1 / -1; order: 3; }
   }
   .wordmark {
     font-family: var(--f-display);
@@ -167,12 +173,6 @@
     background: var(--accent);
   }
 
-  .topbar-right {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: .5rem 1.4rem;
-  }
   .lang {
     display: inline-flex;
     align-items: baseline;
@@ -547,13 +547,11 @@
 <header class="topbar" id="top">
   <div class="wrap">
     <p class="wordmark">Guzmán&nbsp;GP</p>
-    <div class="topbar-right">
-      <p class="label status" data-en="Open to projects"><span class="dot"></span>Abierto a proyectos</p>
-      <div class="lang" role="group" aria-label="Idioma / Language">
-        <button type="button" data-lang="es" aria-pressed="true">ES</button>
-        <span aria-hidden="true">/</span>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
-      </div>
+    <p class="label status" data-en="Open to projects"><span class="dot"></span>Abierto a proyectos</p>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <span aria-hidden="true">/</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
   </div>
 </header>
@@ -563,7 +561,7 @@
     <div>
       <p class="label" data-en="Freelance · AI, data and backend">Freelance · IA, datos y backend</p>
       <h1 data-en="I help you build<span class=&quot;cont&quot;>your digital solution<span class=&quot;cursor&quot;></span></span>">Te ayudo a crear<span class="cont">tu solución digital<span class="cursor"></span></span></h1>
-      <p class="lede" data-en="Over <strong>8 years</strong> contributing to AI solutions in corporate environments; I have worked as an AI engineer on conversational interfaces, a data science consultant and a senior backend developer.">Más de <strong>8 años</strong> contribuyendo a muchas soluciones de IA en entornos corporativos; he sido ingeniero de IA en interfaces conversacionales, consultor de ciencia de datos y desarrollador backend senior.</p>
+      <p class="lede" data-en="Over <strong>8 years</strong> contributing to different AI solutions in corporate environments; I have worked as an AI engineer on conversational interfaces, a data science consultant and a senior backend developer.">Más de <strong>8 años</strong> contribuyendo a diferentes soluciones de IA en entornos corporativos; he sido ingeniero de IA en interfaces conversacionales, consultor de ciencia de datos y desarrollador backend senior.</p>
     </div>
 
     <div class="rail">
@@ -647,8 +645,8 @@
       <article class="card">
   <div class="card-media"><img src="c-backend.jpg" width="700" height="280" alt="Capas horizontales apiladas y conectadas"></div>
   <div class="card-body">
-        <h3 data-en="Backend">Backend</h3>
-        <p data-en="Senior backend development. The part nobody sees and everything else depends on.">Desarrollo backend senior. La parte que nadie ve y de la que depende que todo lo demás funcione.</p>
+        <h3 data-en="Fullstack">Fullstack</h3>
+        <p data-en="Senior backend development, plus the frontend needed to actually use it. The part nobody sees and everything else depends on.">Desarrollo backend senior, y el frontend necesario para usarlo. La parte que nadie ve y de la que depende que todo lo demás funcione.</p>
       
   </div>
       </article>
