@@ -129,12 +129,13 @@
 
   .reveal {
     opacity: 0;
+    will-change: opacity, transform;
     transition: opacity 1.25s ease, transform 1.25s cubic-bezier(.16, .74, .24, 1);
   }
   .reveal.from-left   { transform: translate3d(-64px, 0, 0); }
   .reveal.from-right  { transform: translate3d(64px, 0, 0); }
   .reveal.from-bottom { transform: translate3d(0, 56px, 0); }
-  .reveal.is-visible  { opacity: 1; transform: none; }
+  .reveal.is-visible  { opacity: 1; transform: none; will-change: auto; }
 
   .wrap {
     max-width: 68rem;
@@ -914,7 +915,7 @@
   var ctx = canvas.getContext("2d");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   var dark = window.matchMedia("(prefers-color-scheme: dark)");
-  var SIZE = 15, columns = [], ink = "rgba(20,24,26,.08)", raf = null, last = 0;
+  var SIZE = 19, columns = [], ink = "rgba(20,24,26,.08)", raf = null, last = 0;
 
   function readInk() {
     var v = getComputedStyle(document.documentElement).getPropertyValue("--rain-ink").trim();
@@ -922,7 +923,7 @@
   }
 
   function layout() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dpr = 1; // el efecto es tenue: a 1x se ve igual y pinta 4 veces menos
     var w = window.innerWidth, h = window.innerHeight;
     canvas.width = Math.floor(w * dpr);
     canvas.height = Math.floor(h * dpr);
@@ -954,7 +955,7 @@
 
   function frame(now) {
     raf = requestAnimationFrame(frame);
-    if (now - last < 60) return;
+    if (now - last < 100) return;
     last = now;
     var w = window.innerWidth, h = window.innerHeight;
     ctx.save();
@@ -985,6 +986,14 @@
     clearTimeout(timer);
     timer = setTimeout(reset, 200);
   });
+
+  // el repintado a pantalla completa compite con el scroll: se aparta mientras dura
+  var idle;
+  window.addEventListener("scroll", function () {
+    stop();
+    clearTimeout(idle);
+    idle = setTimeout(function () { if (!document.hidden) start(); }, 220);
+  }, { passive: true });
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) stop(); else start();
   });
@@ -1027,7 +1036,7 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0, rootMargin: "0px 0px -14% 0px" });
 
     nodes.forEach(function (n) { io.observe(n); });
   } catch (e) {
@@ -1035,8 +1044,17 @@
     return;
   }
 
-  // red de seguridad: el contenido nunca se queda oculto
-  setTimeout(revealAll, 6000);
+  // red de seguridad: si algo impidiera observar, el contenido no se queda oculto
+  window.addEventListener("load", function () {
+    setTimeout(function () {
+      var pendientes = nodes.filter(function (n) { return !n.classList.contains("is-visible"); });
+      var visiblesEnPantalla = pendientes.filter(function (n) {
+        var r = n.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0;
+      });
+      visiblesEnPantalla.forEach(function (n) { n.classList.add("is-visible"); });
+    }, 1200);
+  });
 })();
 </script>
 
