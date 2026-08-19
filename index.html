@@ -26,6 +26,7 @@
   :root {
     --paper:      #E8EAE3;
     --surface:    #F2F3ED;
+    --panel:      #DCE0D5;
     --ink:        #14181A;
     --ink-soft:   #4E5651;
     --ink-faint:  #878E86;
@@ -53,6 +54,7 @@
     :root:not([data-theme="light"]) {
       --paper:      #101312;
       --surface:    #191D1B;
+      --panel:      #1B211D;
       --ink:        #E4E7DF;
       --ink-soft:   #A3ABA3;
       --ink-faint:  #6E766E;
@@ -70,6 +72,7 @@
   :root[data-theme="dark"] {
     --paper:      #101312;
     --surface:    #191D1B;
+    --panel:      #1B211D;
     --ink:        #E4E7DF;
     --ink-soft:   #A3ABA3;
     --ink-faint:  #6E766E;
@@ -308,7 +311,7 @@
 
   /* ---------- ticker de stack ---------- */
 
-  .stack { border-block: 1px solid var(--rule); background: var(--surface); }
+  .stack { border-block: 1px solid var(--rule); background: var(--panel); }
 
   .ticker {
     overflow: hidden;
@@ -427,6 +430,7 @@
   /* ---------- secciones ---------- */
 
   section.band { border-bottom: 1px solid var(--rule); }
+  section.panel { background: var(--panel); }
   section.band > .wrap { padding-block: clamp(3rem, 7vw, 5.5rem); }
 
   .section-head {
@@ -776,7 +780,7 @@
   </div>
 </section>
 
-<section class="band">
+<section class="band panel">
   <div class="wrap two-col">
     <div class="section-head" style="margin-bottom:0">
       <p class="label" data-en="The pace">El ritmo</p>
@@ -814,7 +818,7 @@
   </div>
 </section>
 
-<section class="band projects">
+<section class="band panel projects">
   <div class="wrap">
     <div class="section-head">
       <p class="label" data-en="Projects">Proyectos</p>
