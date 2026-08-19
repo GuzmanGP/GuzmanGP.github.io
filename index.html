@@ -38,6 +38,7 @@
     --f-body:    "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
     --f-mono:    ui-monospace, "SF Mono", SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
 
+    --rain-ink: rgba(20, 24, 26, .085);
     --portrait-disc: #D6D9D0;
     --portrait-ring: #FCFCF8;
 
@@ -56,6 +57,7 @@
       --accent:     #8FC7AF;
       --accent-ink: #0E1211;
       --grid:       rgba(228, 231, 223, .05);
+      --rain-ink:   rgba(143, 199, 175, .10);
     }
   }
 
@@ -69,6 +71,7 @@
     --accent:     #8FC7AF;
     --accent-ink: #0E1211;
     --grid:       rgba(228, 231, 223, .05);
+    --rain-ink:   rgba(143, 199, 175, .10);
   }
 
   * { box-sizing: border-box; }
@@ -93,6 +96,19 @@
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
+  }
+
+  #rain {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  body > header,
+  body > section,
+  body > footer {
+    position: relative;
+    z-index: 1;
   }
 
   .wrap {
@@ -462,6 +478,8 @@
   }
 </style>
 
+<canvas id="rain" aria-hidden="true"></canvas>
+
 <header class="topbar">
   <div class="wrap">
     <p class="wordmark">Guzmán&nbsp;GP</p>
@@ -629,6 +647,97 @@
   try { saved = localStorage.getItem("gp-lang"); } catch (e) {}
   var initial = saved || ((navigator.language || "es").toLowerCase().indexOf("es") === 0 ? "es" : "en");
   apply(initial);
+})();
+</script>
+
+<script>
+(function () {
+  var canvas = document.getElementById("rain");
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var dark = window.matchMedia("(prefers-color-scheme: dark)");
+  var SIZE = 15, columns = [], ink = "rgba(20,24,26,.08)", raf = null, last = 0;
+
+  function readInk() {
+    var v = getComputedStyle(document.documentElement).getPropertyValue("--rain-ink").trim();
+    if (v) ink = v;
+  }
+
+  function layout() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = window.innerWidth, h = window.innerHeight;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.font = (SIZE - 3) + "px ui-monospace, SFMono-Regular, Menlo, monospace";
+    ctx.textBaseline = "top";
+    var n = Math.ceil(w / SIZE);
+    columns = [];
+    for (var i = 0; i < n; i++) {
+      columns.push({ y: Math.random() * -h, speed: 0.3 + Math.random() * 0.7 });
+    }
+    ctx.clearRect(0, 0, w, h);
+  }
+
+  function digit() { return Math.random() < 0.5 ? "0" : "1"; }
+
+  function still() {
+    var w = window.innerWidth, h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = ink;
+    for (var x = 0; x < w; x += SIZE) {
+      for (var y = 0; y < h; y += SIZE * 2) {
+        if (Math.random() < 0.35) ctx.fillText(digit(), x, y + Math.random() * SIZE);
+      }
+    }
+  }
+
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    if (now - last < 60) return;
+    last = now;
+    var w = window.innerWidth, h = window.innerHeight;
+    ctx.save();
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.fillStyle = "rgba(0,0,0,.07)";
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+    ctx.fillStyle = ink;
+    for (var i = 0; i < columns.length; i++) {
+      var col = columns[i];
+      ctx.fillText(digit(), i * SIZE, col.y);
+      col.y += SIZE * col.speed;
+      if (col.y > h + Math.random() * 500) col.y = -20 - Math.random() * 400;
+    }
+  }
+
+  function start() {
+    stop();
+    if (reduce.matches) { still(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+  function reset() { readInk(); layout(); start(); }
+
+  var timer;
+  window.addEventListener("resize", function () {
+    clearTimeout(timer);
+    timer = setTimeout(reset, 200);
+  });
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stop(); else start();
+  });
+  if (dark.addEventListener) dark.addEventListener("change", reset);
+  if (reduce.addEventListener) reduce.addEventListener("change", reset);
+  document.querySelectorAll(".lang button").forEach(function (b) {
+    b.addEventListener("click", function () { setTimeout(readInk, 0); });
+  });
+
+  reset();
 })();
 </script>
 
