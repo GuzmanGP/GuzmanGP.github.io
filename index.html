@@ -41,8 +41,7 @@
     --marker: #9BDCC0;
     --marker-ink: #14181A;
     --rain-ink: rgba(20, 24, 26, .085);
-    --media-filter: contrast(1.06);
-    --media-blend: multiply;
+    --media-ink: none;
     --portrait-disc: #D6D9D0;
     --portrait-ring: #FCFCF8;
 
@@ -64,8 +63,7 @@
       --marker:     #8FD3B4;
       --marker-ink: #101312;
       --rain-ink:   rgba(143, 199, 175, .10);
-      --media-filter: invert(1) brightness(.82) contrast(1.1);
-      --media-blend: screen;
+      --media-ink: invert(1) saturate(0) brightness(1.9);
     }
   }
 
@@ -82,8 +80,7 @@
     --marker:     #8FD3B4;
     --marker-ink: #101312;
     --rain-ink:   rgba(143, 199, 175, .10);
-    --media-filter: invert(1) brightness(.82) contrast(1.1);
-    --media-blend: screen;
+    --media-ink: invert(1) saturate(0) brightness(1.9);
   }
 
   * { box-sizing: border-box; }
@@ -391,8 +388,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: var(--media-filter);
-    mix-blend-mode: var(--media-blend);
+    filter: var(--media-ink);
   }
   .slide-body { padding: 1.4rem 1.5rem 1.8rem; display: grid; gap: .7rem; }
   .slide h3 {
@@ -525,8 +521,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: var(--media-filter);
-    mix-blend-mode: var(--media-blend);
+    filter: var(--media-ink);
   }
   .card-body {
     padding: 1.4rem 1.5rem 1.8rem;
@@ -573,8 +568,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: var(--media-filter);
-    mix-blend-mode: var(--media-blend);
+    filter: var(--media-ink);
   }
   .mode h3 {
     font-family: var(--f-display);
@@ -1013,7 +1007,7 @@
   if (reduce.matches || !("IntersectionObserver" in window)) return;
 
   var nodes = [].slice.call(document.querySelectorAll(
-    ".stack > .stack-note, .band > .wrap, .contact > .wrap"
+    ".stack > .stack-note, .band > .wrap"
   ));
   if (!nodes.length) return;
 
