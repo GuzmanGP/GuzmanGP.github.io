@@ -136,6 +136,10 @@
   .reveal.from-right  { transform: translate3d(64px, 0, 0); }
   .reveal.from-bottom { transform: translate3d(0, 56px, 0); }
   .reveal.is-visible  { opacity: 1; transform: none; will-change: auto; }
+  /* el carrusel no se desplaza: mover una capa con scroll y anclaje dentro
+     obliga a recalcular las posiciones de anclaje en cada fotograma */
+  .reveal.fade-only   { transform: none; }
+  .slide { contain: paint; }
 
   .wrap {
     max-width: 68rem;
@@ -1017,8 +1021,24 @@
 
   // los bloques de tarjetas suben desde abajo; el resto alterna lados entre sí,
   // sin contar los que suben, para que la alternancia no se rompa
+  // un bloque con carrusel se parte: el encabezado se desplaza, el carrusel funde
+  var expandidos = [];
+  nodes.forEach(function (n) {
+    var carrusel = n.querySelector(".carousel");
+    if (carrusel) {
+      expandidos.push(n.querySelector(".section-head"), carrusel);
+    } else {
+      expandidos.push(n);
+    }
+  });
+  nodes = expandidos.filter(Boolean);
+
   var lateral = 0;
   nodes.forEach(function (n) {
+    if (n.classList.contains("carousel")) {
+      n.classList.add("reveal", "fade-only");
+      return;
+    }
     var sube = n.querySelector(".modes") || n.querySelector(".cards");
     var side = sube ? "from-bottom" : ((lateral++ % 2) ? "from-right" : "from-left");
     n.classList.add("reveal", side);
