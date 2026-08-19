@@ -136,6 +136,15 @@
   .reveal.from-right  { transform: translate3d(64px, 0, 0); }
   .reveal.from-bottom { transform: translate3d(0, 56px, 0); }
   .reveal.is-visible  { opacity: 1; transform: none; will-change: auto; }
+
+  /* en móvil el recorrido lateral obliga a recomponer todo el ancho: se
+     cambia por una subida corta, que es mucho más barata de animar */
+  @media (max-width: 48rem) {
+    .reveal { transition-duration: .9s; }
+    .reveal.from-left,
+    .reveal.from-right,
+    .reveal.from-bottom { transform: translate3d(0, 26px, 0); }
+  }
   /* el carrusel no se desplaza: mover una capa con scroll y anclaje dentro
      obliga a recalcular las posiciones de anclaje en cada fotograma */
   .reveal.fade-only   { transform: none; }
@@ -976,7 +985,8 @@
 
   function start() {
     stop();
-    if (reduce.matches) { still(); return; }
+    // en móvil el repintado continuo a pantalla completa no compensa
+    if (reduce.matches || window.innerWidth < 760) { still(); return; }
     raf = requestAnimationFrame(frame);
   }
   function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
