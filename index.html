@@ -309,8 +309,8 @@
 
   .stack-note {
     display: grid;
-    gap: .7rem;
-    padding-block: 1.6rem 1.5rem;
+    gap: 1.3rem;
+    padding-block: clamp(2.2rem, 5vw, 3.2rem) clamp(1.8rem, 4vw, 2.6rem);
   }
   .plate-note {
     margin: 0;
@@ -530,7 +530,10 @@
 
 <section class="stack">
   <div class="wrap stack-note">
-    <p class="label" data-en="From the daily noise to something that works">Del ruido diario a algo que funciona</p>
+    <div class="section-head" style="margin-bottom:0">
+      <p class="label" data-en="Approach">Enfoque</p>
+      <h2 data-en="From the daily noise to something that works">Del ruido diario a algo que funciona</h2>
+    </div>
     <p class="plate-note" data-en="I look for <em>simple solutions</em>: scripts, scalable servers, databases and API connections — the essentials for your logic to run.">Busco <em>soluciones simples</em>: scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
   </div>
   <div class="ticker">
