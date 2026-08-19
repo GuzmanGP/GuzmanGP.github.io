@@ -123,11 +123,12 @@
 
   .reveal {
     opacity: 0;
-    transition: opacity .75s ease, transform .75s cubic-bezier(.22, .68, .24, 1);
+    transition: opacity 1.25s ease, transform 1.25s cubic-bezier(.16, .74, .24, 1);
   }
-  .reveal.from-left  { transform: translate3d(-34px, 0, 0); }
-  .reveal.from-right { transform: translate3d(34px, 0, 0); }
-  .reveal.is-visible { opacity: 1; transform: none; }
+  .reveal.from-left   { transform: translate3d(-64px, 0, 0); }
+  .reveal.from-right  { transform: translate3d(64px, 0, 0); }
+  .reveal.from-bottom { transform: translate3d(0, 56px, 0); }
+  .reveal.is-visible  { opacity: 1; transform: none; }
 
   .wrap {
     max-width: 68rem;
@@ -852,7 +853,10 @@
   if (!nodes.length) return;
 
   nodes.forEach(function (n, i) {
-    n.classList.add("reveal", i % 2 ? "from-right" : "from-left");
+    var side = n.querySelector(".modes")
+      ? "from-bottom"
+      : (i % 2 ? "from-right" : "from-left");
+    n.classList.add("reveal", side);
   });
 
   function revealAll() {
