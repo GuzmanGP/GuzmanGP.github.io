@@ -355,6 +355,78 @@
     .stack-note > .section-head { order: 2; }
   }
 
+  /* ---------- carrusel de proyectos ---------- */
+
+  .carousel { display: grid; gap: 1.4rem; }
+
+  .track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(100%, 25rem);
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: .35rem;
+    scrollbar-width: none;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+  .slide {
+    scroll-snap-align: start;
+    display: grid;
+    align-content: start;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+  .slide-media {
+    height: clamp(7rem, 13vw, 9.5rem);
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    line-height: 0;
+  }
+  .slide-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: var(--media-filter);
+    mix-blend-mode: var(--media-blend);
+  }
+  .slide-body { padding: 1.4rem 1.5rem 1.8rem; display: grid; gap: .7rem; }
+  .slide h3 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    letter-spacing: -.025em;
+    font-size: 1.12rem;
+    margin: 0;
+  }
+  .slide p { margin: 0; font-size: .97rem; color: var(--ink-soft); }
+
+  .carousel-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .carousel-count { min-width: 4ch; }
+  .carousel-btn {
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1;
+    background: none;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    padding: .5rem .85rem;
+    cursor: pointer;
+    transition: color .18s ease, border-color .18s ease;
+  }
+  .carousel-btn:hover:not(:disabled) { color: var(--ink); border-color: var(--accent); }
+  .carousel-btn:disabled { opacity: .35; cursor: default; }
+  @media (prefers-reduced-motion: reduce) {
+    .track { scroll-behavior: auto; }
+    .carousel-btn { transition: none; }
+  }
+
   /* ---------- secciones ---------- */
 
   section.band { border-bottom: 1px solid var(--rule); }
@@ -747,6 +819,45 @@
   </div>
 </section>
 
+<section class="band projects">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label" data-en="Projects">Proyectos</p>
+      <h2 data-en="What I have built on my own.">Lo que he montado por mi cuenta.</h2>
+    </div>
+    <div class="carousel">
+      <div class="track" tabindex="0" role="group" aria-label="Proyectos">
+        <article class="slide">
+          <div class="slide-media"><img src="p1.jpg" width="760" height="428" alt="Hitos de un proceso encadenados en una línea"></div>
+          <div class="slide-body">
+            <h3 data-en="Diagnostic test management">Gestión de pruebas diagnósticas</h3>
+            <p data-en="A platform for an integrative clinic. The patient report comes in, the test panel is proposed, quoted, the blood draw is coordinated with the lab, and the interpreted results come back. Ten stages, from first consultation to final report.">Plataforma para una clínica integrativa. Entra el informe del paciente, se propone el panel de pruebas, se presupuesta, se coordina la extracción con el laboratorio y se devuelven los resultados interpretados. Diez fases, de la primera consulta al informe final.</p>
+          </div>
+        </article>
+        <article class="slide">
+          <div class="slide-media"><img src="p2.jpg" width="760" height="428" alt="Una onda de sonido que se convierte en líneas de texto"></div>
+          <div class="slide-body">
+            <h3 data-en="From voice to report">De la voz al informe</h3>
+            <p data-en="Consultation audio is transcribed and turned into a structured report, ready for the practitioner to review and sign. What used to be an afternoon of writing.">El audio de una consulta se transcribe y se convierte en un informe estructurado, listo para que el profesional lo revise y lo firme. Lo que antes era una tarde de redacción.</p>
+          </div>
+        </article>
+        <article class="slide">
+          <div class="slide-media"><img src="p3.jpg" width="760" height="428" alt="Un árbol de decisión que se ramifica desde un punto"></div>
+          <div class="slide-body">
+            <h3 data-en="AI-guided onboarding">Onboarding conducido por IA</h3>
+            <p data-en="A questionnaire that adapts to each answer and shifts by speciality, so the patient arrives with their history already gathered. Nothing goes out without human review.">Un cuestionario que se adapta a cada respuesta y cambia según la especialidad, para que el paciente llegue a la consulta con su historia ya recogida. Nada sale sin revisión humana.</p>
+          </div>
+        </article>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" type="button" data-dir="-1" aria-label="Proyecto anterior">←</button>
+        <p class="carousel-count label" aria-live="polite"></p>
+        <button class="carousel-btn" type="button" data-dir="1" aria-label="Proyecto siguiente">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="contact">
   <div class="wrap">
     <div class="contact-inner">
@@ -973,6 +1084,55 @@
       say(fallbackCopy() ? done : failed);
     }
   });
+})();
+</script>
+
+<script>
+(function () {
+  var track = document.querySelector(".track");
+  if (!track) return;
+  var slides = [].slice.call(track.querySelectorAll(".slide"));
+  var count = document.querySelector(".carousel-count");
+  var buttons = [].slice.call(document.querySelectorAll(".carousel-btn"));
+
+  // distancia real entre el borde de una tarjeta y el del carril: rect en vez
+  // de offsetLeft, que depende del ancestro posicionado
+  function offsetOf(slide) {
+    return slide.getBoundingClientRect().left - track.getBoundingClientRect().left;
+  }
+
+  function current() {
+    var best = 0, min = Infinity;
+    slides.forEach(function (s, i) {
+      var d = Math.abs(offsetOf(s));
+      if (d < min) { min = d; best = i; }
+    });
+    return best;
+  }
+
+  function sync() {
+    var atStart = track.scrollLeft <= 2;
+    var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    count.textContent = (current() + 1) + " / " + slides.length;
+    buttons.forEach(function (b) {
+      b.disabled = b.dataset.dir === "-1" ? atStart : atEnd;
+    });
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var i = Math.max(0, Math.min(slides.length - 1, current() + Number(b.dataset.dir)));
+      track.scrollBy({ left: offsetOf(slides[i]) });
+      setTimeout(sync, 450);
+    });
+  });
+
+  track.addEventListener("scroll", function () {
+    clearTimeout(track._t);
+    track._t = setTimeout(sync, 90);
+  });
+  window.addEventListener("resize", sync);
+  sync();
 })();
 </script>
 
