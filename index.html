@@ -82,6 +82,9 @@
 
   * { box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
   body {
     margin: 0;
     background-color: var(--paper);
@@ -495,16 +498,32 @@
 
   footer .wrap {
     display: flex;
-    flex-wrap: wrap;
-    gap: .6rem 1.5rem;
-    justify-content: space-between;
-    padding-block: 1.6rem 2.4rem;
+    justify-content: center;
+    padding-block: 2rem 2.8rem;
+  }
+  .to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    text-decoration: none;
+    color: var(--ink-faint);
+    transition: color .18s ease;
+  }
+  .to-top:hover { color: var(--ink); }
+  .to-top-arrow {
+    display: inline-block;
+    transition: transform .18s ease;
+  }
+  .to-top:hover .to-top-arrow { transform: translateY(-3px); }
+  @media (prefers-reduced-motion: reduce) {
+    .to-top, .to-top-arrow { transition: none; }
+    .to-top:hover .to-top-arrow { transform: none; }
   }
 </style>
 
 <canvas id="rain" aria-hidden="true"></canvas>
 
-<header class="topbar">
+<header class="topbar" id="top">
   <div class="wrap">
     <p class="wordmark">Guzmán&nbsp;GP</p>
     <div class="topbar-right">
@@ -658,8 +677,7 @@
 
 <footer>
   <div class="wrap">
-    <p class="label" data-en="Guzmán GP · AI, data and backend">Guzmán GP · IA, datos y backend</p>
-    <p class="label"><a href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer">linkedin.com/in/guzman-gp</a> · <a href="mailto:guzmangomezp1@gmail.com">guzmangomezp1@gmail.com</a></p>
+    <a class="to-top label" href="#top" data-en="Back to top"><span class="to-top-arrow" aria-hidden="true">↑</span>Volver arriba</a>
   </div>
 </footer>
 
