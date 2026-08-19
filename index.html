@@ -39,6 +39,8 @@
     --f-mono:    ui-monospace, "SF Mono", SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
 
     --rain-ink: rgba(20, 24, 26, .085);
+    --media-filter: contrast(1.06);
+    --media-blend: multiply;
     --portrait-disc: #D6D9D0;
     --portrait-ring: #FCFCF8;
 
@@ -58,6 +60,8 @@
       --accent-ink: #0E1211;
       --grid:       rgba(228, 231, 223, .05);
       --rain-ink:   rgba(143, 199, 175, .10);
+      --media-filter: invert(1) brightness(.82) contrast(1.1);
+      --media-blend: screen;
     }
   }
 
@@ -72,6 +76,8 @@
     --accent-ink: #0E1211;
     --grid:       rgba(228, 231, 223, .05);
     --rain-ink:   rgba(143, 199, 175, .10);
+    --media-filter: invert(1) brightness(.82) contrast(1.1);
+    --media-blend: screen;
   }
 
   * { box-sizing: border-box; }
@@ -282,7 +288,7 @@
   .ticker {
     overflow: hidden;
     padding-block: .85rem;
-    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
     -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
     mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
   }
@@ -367,6 +373,8 @@
   }
   @media (min-width: 54rem) {
     .two-col { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .two-col > .prose { order: 1; }
+    .two-col > .section-head { order: 2; }
   }
 
   /* tarjetas de servicio */
@@ -381,7 +389,24 @@
   }
   .card {
     background: var(--surface);
-    padding: 1.6rem 1.5rem 1.9rem;
+    display: grid;
+    align-content: start;
+  }
+  .card-media {
+    height: clamp(5rem, 9vw, 6.5rem);
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    line-height: 0;
+  }
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: var(--media-filter);
+    mix-blend-mode: var(--media-blend);
+  }
+  .card-body {
+    padding: 1.4rem 1.5rem 1.8rem;
     display: grid;
     gap: .7rem;
     align-content: start;
@@ -529,18 +554,18 @@
 </section>
 
 <section class="stack">
+  <div class="ticker">
+    <div class="ticker-track">
+      <span data-en="MCP">MCP</span><span data-en="agents">agentes</span><span data-en="RAG">RAG</span><span data-en="LLMs">LLMs</span><span data-en="FastAPI">FastAPI</span><span data-en="workflows">workflows</span><span data-en="harnesses">harnesses</span><span data-en="scalability">escalabilidad</span><span data-en="data pipelines">pipelines de datos</span><span data-en="embeddings">embeddings</span><span data-en="spec-driven development">spec-driven development</span><span data-en="Claude Code">Claude Code</span><span data-en="LLM evaluation">evaluación de LLM</span><span data-en="vector stores">vector stores</span><span data-en="orchestration">orquestación</span><span data-en="APIs">APIs</span><span data-en="automation">automatización</span><span data-en="video generation">generación de vídeo</span><span data-en="image generation">generación de imágenes</span><span data-en="avatars">avatares</span>
+      <span aria-hidden="true" data-en="MCP">MCP</span><span aria-hidden="true" data-en="agents">agentes</span><span aria-hidden="true" data-en="RAG">RAG</span><span aria-hidden="true" data-en="LLMs">LLMs</span><span aria-hidden="true" data-en="FastAPI">FastAPI</span><span aria-hidden="true" data-en="workflows">workflows</span><span aria-hidden="true" data-en="harnesses">harnesses</span><span aria-hidden="true" data-en="scalability">escalabilidad</span><span aria-hidden="true" data-en="data pipelines">pipelines de datos</span><span aria-hidden="true" data-en="embeddings">embeddings</span><span aria-hidden="true" data-en="spec-driven development">spec-driven development</span><span aria-hidden="true" data-en="Claude Code">Claude Code</span><span aria-hidden="true" data-en="LLM evaluation">evaluación de LLM</span><span aria-hidden="true" data-en="vector stores">vector stores</span><span aria-hidden="true" data-en="orchestration">orquestación</span><span aria-hidden="true" data-en="APIs">APIs</span><span aria-hidden="true" data-en="automation">automatización</span><span aria-hidden="true" data-en="video generation">generación de vídeo</span><span aria-hidden="true" data-en="image generation">generación de imágenes</span><span aria-hidden="true" data-en="avatars">avatares</span>
+    </div>
+  </div>
   <div class="wrap stack-note">
     <div class="section-head" style="margin-bottom:0">
       <p class="label" data-en="Approach">Enfoque</p>
       <h2 data-en="From the daily noise to something that works">Del ruido diario a algo que funciona</h2>
     </div>
     <p class="plate-note" data-en="I look for <em>simple solutions</em>: scripts, scalable servers, databases and API connections — the essentials for your logic to run.">Busco <em>soluciones simples</em>: scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
-  </div>
-  <div class="ticker">
-    <div class="ticker-track">
-      <span data-en="MCP">MCP</span><span data-en="agents">agentes</span><span data-en="RAG">RAG</span><span data-en="LLMs">LLMs</span><span data-en="FastAPI">FastAPI</span><span data-en="workflows">workflows</span><span data-en="harnesses">harnesses</span><span data-en="scalability">escalabilidad</span><span data-en="data pipelines">pipelines de datos</span><span data-en="embeddings">embeddings</span><span data-en="spec-driven development">spec-driven development</span><span data-en="Claude Code">Claude Code</span><span data-en="LLM evaluation">evaluación de LLM</span><span data-en="vector stores">vector stores</span><span data-en="orchestration">orquestación</span><span data-en="APIs">APIs</span><span data-en="automation">automatización</span><span data-en="video generation">generación de vídeo</span><span data-en="image generation">generación de imágenes</span><span data-en="avatars">avatares</span>
-      <span aria-hidden="true" data-en="MCP">MCP</span><span aria-hidden="true" data-en="agents">agentes</span><span aria-hidden="true" data-en="RAG">RAG</span><span aria-hidden="true" data-en="LLMs">LLMs</span><span aria-hidden="true" data-en="FastAPI">FastAPI</span><span aria-hidden="true" data-en="workflows">workflows</span><span aria-hidden="true" data-en="harnesses">harnesses</span><span aria-hidden="true" data-en="scalability">escalabilidad</span><span aria-hidden="true" data-en="data pipelines">pipelines de datos</span><span aria-hidden="true" data-en="embeddings">embeddings</span><span aria-hidden="true" data-en="spec-driven development">spec-driven development</span><span aria-hidden="true" data-en="Claude Code">Claude Code</span><span aria-hidden="true" data-en="LLM evaluation">evaluación de LLM</span><span aria-hidden="true" data-en="vector stores">vector stores</span><span aria-hidden="true" data-en="orchestration">orquestación</span><span aria-hidden="true" data-en="APIs">APIs</span><span aria-hidden="true" data-en="automation">automatización</span><span aria-hidden="true" data-en="video generation">generación de vídeo</span><span aria-hidden="true" data-en="image generation">generación de imágenes</span><span aria-hidden="true" data-en="avatars">avatares</span>
-    </div>
   </div>
 </section>
 
@@ -565,16 +590,28 @@
     </div>
     <div class="cards">
       <article class="card">
+  <div class="card-media"><img src="c-ia.jpg" width="700" height="280" alt="Red abstracta de nodos conectados"></div>
+  <div class="card-body">
         <h3 data-en="AI solutions">Soluciones de IA</h3>
         <p data-en="I have contributed to AI solutions in corporate environments, where what is asked for is not a demo but something that holds up in production.">He contribuido a soluciones de IA en entornos corporativos, donde lo que se pide no es una demo sino algo que aguante en producción.</p>
+      
+  </div>
       </article>
       <article class="card">
+  <div class="card-media"><img src="c-datos.jpg" width="700" height="280" alt="Nube de puntos con una línea de tendencia"></div>
+  <div class="card-body">
         <h3 data-en="Data science">Ciencia de datos</h3>
         <p data-en="As a consultant: making sense of the data you already have, getting a useful answer out of it, and knowing when a model is not the answer.">Como consultor: entender los datos que ya tienes, sacarles una respuesta útil y saber cuándo el modelo no es la respuesta.</p>
+      
+  </div>
       </article>
       <article class="card">
+  <div class="card-media"><img src="c-backend.jpg" width="700" height="280" alt="Capas horizontales apiladas y conectadas"></div>
+  <div class="card-body">
         <h3 data-en="Backend">Backend</h3>
         <p data-en="Senior backend development. The part nobody sees and everything else depends on.">Desarrollo backend senior. La parte que nadie ve y de la que depende que todo lo demás funcione.</p>
+      
+  </div>
       </article>
     </div>
   </div>
