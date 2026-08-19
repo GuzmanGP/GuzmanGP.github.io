@@ -427,12 +427,33 @@
   .mode {
     background: var(--paper);
     display: grid;
-    gap: .5rem 2rem;
+    gap: .9rem 2rem;
     padding: 1.4rem 0;
-    align-items: baseline;
+    align-items: start;
   }
   @media (min-width: 48rem) {
-    .mode { grid-template-columns: 13rem minmax(0, 1fr); }
+    .mode {
+      grid-template-columns: 9rem 11rem minmax(0, 1fr);
+      align-items: center;
+      gap: .5rem 2rem;
+    }
+  }
+  .mode-media {
+    height: 4rem;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    line-height: 0;
+  }
+  @media (min-width: 48rem) {
+    .mode-media { height: 3.4rem; }
+  }
+  .mode-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: var(--media-filter);
+    mix-blend-mode: var(--media-blend);
   }
   .mode h3 {
     font-family: var(--f-display);
@@ -643,17 +664,20 @@
     </div>
     <div class="modes">
       <div class="mode">
+        <div class="mode-media"><img src="m-proyecto.jpg" width="600" height="240" alt="Un segmento acotado entre dos extremos marcados"></div>
         <h3 data-en="Per project">Pago por proyecto</h3>
         <p data-en="You have something specific in mind, scoped and defined, with a beginning and an end. We size it and I build it.">Tienes algo concreto en mente, acotado, definido, con principio y final. Lo dimensionamos y lo construyo.</p>
-      </div>
+</div>
       <div class="mode">
+        <div class="mode-media"><img src="m-suscripcion.jpg" width="600" height="240" alt="Una onda continua que se repite"></div>
         <h3 data-en="Monthly retainer">Suscripción mensual</h3>
         <p data-en="Do you need someone on an ongoing basis, or is the idea still fuzzy? We grow the product, iterate on it or maintain it, sorting out whatever comes up.">¿Necesitas a alguien de forma continuada o tienes una idea difusa? Evolucionamos el producto, lo iteramos o lo mantenemos, resolviendo lo que aparezca.</p>
-      </div>
+</div>
       <div class="mode">
+        <div class="mode-media"><img src="m-socio.jpg" width="600" height="240" alt="Dos círculos que se solapan, con la intersección llena"></div>
         <h3 data-en="As a partner">Como socio</h3>
         <p data-en="If you convince me ;) — I join the idea and we row together.">Si me convences ;) — entro en la idea y remamos juntos.</p>
-      </div>
+</div>
     </div>
   </div>
 </section>
