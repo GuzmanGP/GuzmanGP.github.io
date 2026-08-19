@@ -1,145 +1,571 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guzmán GP</title>
+<meta name="description" content="Ingeniero de IA y desarrollador backend senior. Soluciones digitales simples: agentes, MCP, RAG, pipelines de datos y APIs, sin workflows imposibles de mantener.">
+<meta name="author" content="Guzmán GP">
+<link rel="canonical" href="https://guzmangp.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Guzmán GP">
+<meta property="og:description" content="Ingeniero de IA y desarrollador backend senior. Soluciones digitales simples: agentes, MCP, RAG, pipelines de datos y APIs, sin workflows imposibles de mantener.">
+<meta property="og:url" content="https://guzmangp.github.io/">
+<meta property="og:image" content="https://guzmangp.github.io/og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  img { max-width: 100%; }
+</style>
+</head>
 <body>
-<h1>Estudio de la salud mental entre trabajadores: EEUU </h1>
+<style>
+  :root {
+    --paper:      #E8EAE3;
+    --surface:    #F2F3ED;
+    --ink:        #14181A;
+    --ink-soft:   #4E5651;
+    --ink-faint:  #878E86;
+    --rule:       #CBCFC4;
+    --accent:     #2E5D4E;
+    --accent-ink: #F2F3ED;
+    --grid:       rgba(20, 24, 26, .045);
 
-<br>
-<i>Alumno: Guzmán Gómez Pérez</i>
+    --f-display: "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+    --f-body:    "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --f-mono:    ui-monospace, "SF Mono", SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
 
-<h2>Introducción:</h2>
-Este conjunto de datos proviene de una encuesta de 2014 que mide las actitudes hacia la salud mental y la frecuencia de los trastornos de salud mental en el lugar de trabajo tecnológico de EEUU.
+    --portrait-disc: #D6D9D0;
+    --portrait-ring: #FCFCF8;
 
-<p>
-  Fuente: 
-  <a href="https://www.kaggle.com/datasets/osmi/mental-health-in-tech-survey" target="_blank">https://www.kaggle.com/datasets/osmi/mental-health-in-tech-survey</a>
-</p>
+    --measure: 34rem;
+    --pad: clamp(1.25rem, 5vw, 5rem);
+  }
 
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #101312;
+      --surface:    #191D1B;
+      --ink:        #E4E7DF;
+      --ink-soft:   #A3ABA3;
+      --ink-faint:  #6E766E;
+      --rule:       #2A302C;
+      --accent:     #8FC7AF;
+      --accent-ink: #0E1211;
+      --grid:       rgba(228, 231, 223, .05);
+    }
+  }
 
-<h2>Motivaciones:</h2>
+  :root[data-theme="dark"] {
+    --paper:      #101312;
+    --surface:    #191D1B;
+    --ink:        #E4E7DF;
+    --ink-soft:   #A3ABA3;
+    --ink-faint:  #6E766E;
+    --rule:       #2A302C;
+    --accent:     #8FC7AF;
+    --accent-ink: #0E1211;
+    --grid:       rgba(228, 231, 223, .05);
+  }
 
-La concatenación de crisis económicas globales que nos han afectado en los últimos tiempos han agudizado la manifestación de una cultura laboral tóxica latente, debido, probablemente, a un aumento de la competitividad en contraposición a una reducción del margen de beneficios, que en última instancia, ha repercutido en las condiciones del trabajador. Prueba de ello es la conocida “Great Resignation” en la que un porcentaje muy significativo de la sociedad decidió dejar su empleo, al menos temporalmente, poniendo en riesgo su economía vital y evidenciando una latente y profunda insatisfacción profesional.
+  * { box-sizing: border-box; }
 
-<br>
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    background-image:
+      repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 88px),
+      repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 88px);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
 
-Además, irónicamente, con el avance de la globalización y la tecnología, el aumento del rendimiento en el desarrollo del trabajo no ha amortiguado este hecho, sino todo lo contrario. Lo cual, precisamente ahora, con la tercera revolución “tecnológica” que viene de mano de la IA, es vital tenerlo presente y darle voz para instaurar entre la población una transición que reme en pro del bienestar común e individual de todos los ciudadanos y no una constricción, aún mayor, de dichas condiciones.
+  ::selection { background: var(--accent); color: var(--accent-ink); }
 
+  a { color: inherit; }
 
-<h2>Análisis de los encuestados:</h2>
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
 
-<div class="flourish-embed flourish-scatter" data-src="visualisation/13479708"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
-<u>
-Vemos que hay una presencia de un rango jóven de edad entre los encuestados. No obstante, también vemos que la media de afectados se sitúa entre los jóvenes, especialmente en la franja de los 28 a los 33; probablemente propiciado por el comienzo de la independencia económica y la búsqueda de una identidad laboral estable acorde a la personalidad y circunstancias del individuo.
-</u>
-<br>
-<u>
-Además, los factores socioeconómicos y culturales de la sociedad, derivados de la resaca de la crisis económica del 2008, dificultan este proceso con salarios bajos, alquileres altos, precariedad laboral, etc.
+  .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
 
-</u>
-<div class="flourish-embed" data-src="visualisation/13479584"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
-Hay más hombres entre los encuestados, pero también hay un mayor porcentaje de hombres afectados por salud mental. <u>
-    ¿Es quizás la competitividad socioeconómica que imprime la sociedad en el hombre un detonante de problemas de salud mental?
-</u>
+  .label {
+    font-family: var(--f-mono);
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0;
+  }
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/13480237"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
-Vemos que entre los encuestados, la proporción de personas que tienen antecedentes de salud mental y que, ellos mismos, han sido afectados también, es ligeramente superior a aquellos que no tienen una historia familiar. No obstante, <u>la diferencia es sutil y, si bien probablemente exista cierta causalidad, no parece ser determinante para justificar la alta tasa de incidencia.</u>
+  /* ---------- barra superior ---------- */
 
-<div class="flourish-embed flourish-map" data-src="visualisation/13467240"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
-A continuación, se muestra la información de población y el partido político dominante en 2014 en los 5 estados con mayor número de encuestados (los datos de población y el contexto político podrían haber cambiado desde entonces).
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem 1.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-block: 1.1rem;
+  }
+  .wordmark {
+    font-family: var(--f-display);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .dot {
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
 
-<ol>
-  <li>California (CA)
-    <ul>
-      <li>Población (2014): Aproximadamente 38.8 millones</li>
-      <li>Partido político dominante: Demócrata</li>
-      <li>Industria tecnológica: Fuerte, con Silicon Valley como centro de tecnología e innovación</li>
-      <li>Accesibilidad a la atención médica: Buena, aunque con variaciones regionales</li>
-      <li>Niveles de educación: Alto, hogar de universidades de renombre como Stanford y UC Berkeley</li>
-      <li>Diversidad demográfica: Muy diversa, con una gran población hispana y asiática</li>
-    </ul>
-  </li>
-  <li>Texas (TX)
-    <ul>
-      <li>Población (2014): Aproximadamente 26.96 millones</li>
-      <li>Partido político dominante: Republicano</li>
-      <li>Industria tecnológica: Creciente, con Austin como un centro tecnológico emergente</li>
-      <li>Accesibilidad a la atención médica: Variada, con algunas áreas urbanas bien atendidas y áreas rurales con acceso limitado</li>
-      <li>Niveles de educación: Moderado, con varias universidades y colegios reconocidos</li>
-      <li>Diversidad demográfica: Diversa, con una gran población hispana y una mezcla de otros grupos étnicos</li>
-    </ul>
-  </li>
-  <li>Nueva York (NY)
-    <ul>
-      <li>Población (2014): Aproximadamente 19.75 millones</li>
-      <li>Partido político dominante: Demócrata</li>
-      <li>Industria tecnológica: Sólida, con Nueva York como un importante centro tecnológico y de innovación</li>
-      <li>Accesibilidad a la atención médica: Buena, especialmente en áreas urbanas</li>
-      <li>Niveles de educación: Alto, con universidades prestigiosas como Columbia y NYU</li>
-      <li>Diversidad demográfica: Muy diversa, con una amplia variedad de grupos étnicos y culturas</li>
-    </ul>
-  </li>
-  <li>Florida (FL)
-    <ul>
-      <li>Población (2014): Aproximadamente 19.89 millones</li>
-      <li>Partido político dominante: Republicano</li>
-      <li>Industria tecnológica: Moderada, con un enfoque en tecnologías de la información y la biotecnología</li>
-      <li>Accesibilidad a la atención médica: Variada, con algunas áreas urbanas bien atendidas y áreas rurales con acceso limitado</li>
-      <li>Niveles de educación: Moderado, con algunas universidades reconocidas como University of Florida</li>
-      <li>Diversidad demográfica: Diversa, con una gran población hispana y una mezcla de otros grupos étnicos</li>
-   
-<p>Hay varias similitudes entre los 5 estados mencionados anteriormente:</p>
-<ol>
-  <li><strong>Industria tecnológica:</strong> Todos estos estados tienen una presencia significativa en la industria tecnológica, aunque varían en tamaño e impacto. Algunos estados, como California, tienen un impacto y un tamaño mucho mayores en comparación con otros estados.</li>
-  <li><strong>Accesibilidad a la atención médica:</strong> La accesibilidad a la atención médica en estos estados varía, pero en general, las áreas urbanas tienden a estar mejor atendidas que las áreas rurales.</li>
-  <li><strong>Niveles de educación:</strong> Estos estados cuentan con instituciones de educación superior de renombre y un nivel educativo general relativamente alto.</li>
-  <li><strong>Diversidad demográfica:</strong> La diversidad demográfica es otro factor común en estos estados. Todos ellos tienen una mezcla de diferentes grupos étnicos y culturas, aunque la proporción y la composición varían entre los estados.</li>
-</ol>
+  /* ---------- hero ---------- */
 
+  .hero .wrap {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: 1fr;
+    padding-block: clamp(3.5rem, 9vw, 7rem) clamp(2.5rem, 6vw, 4rem);
+  }
+  @media (min-width: 62rem) {
+    .hero .wrap { grid-template-columns: minmax(0, 1fr) 15rem; }
+  }
 
-<h2>Análisis de la cultura de salud mental en la empresa:</h2>
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    letter-spacing: -.045em;
+    line-height: .96;
+    font-size: clamp(2.7rem, 8.5vw, 5.6rem);
+    text-wrap: balance;
+    margin: 1.4rem 0 0;
+  }
+  h1 .cont {
+    display: block;
+    color: var(--ink-faint);
+    font-weight: 300;
+  }
+  h1 .cursor {
+    display: inline-block;
+    width: .07em;
+    height: .78em;
+    margin-left: .06em;
+    vertical-align: -.02em;
+    background: var(--accent);
+    animation: blink 1.15s steps(1, end) infinite;
+  }
+  @keyframes blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/13469652"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
-<p>
-    Se puede apreciar que <u>la gran mayoría de personas desconocen qué herramientas disponen en su ámbito laboral para la prevención y/o neutralización de esta problemática</u>. Lo cual induce a pensar: ¿Es una falta de comunicación por parte de las empresas o una falta de atención por parte de los empleados?
-</p>
+  .lede {
+    max-width: var(--measure);
+    font-size: 1.16rem;
+    color: var(--ink-soft);
+    margin: 1.9rem 0 0;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
 
-<p>
-    Podría ser comprensible que los empleados sin problemas de salud mental no tuvieran la necesidad de buscar información sobre estas medidas, pero el hecho de que los afectados también las desconozcan en la misma proporción induce a pensar que <u>son realmente las empresas las que no ponen a disposición suficientes canales de comunicación de estas herramientas</u>.
-</p>
+  /* rail de metadatos */
+  .rail {
+    display: grid;
+    gap: 1.4rem;
+    align-content: start;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.4rem;
+  }
+  @media (min-width: 62rem) {
+    .rail {
+      border-top: 0;
+      border-left: 1px solid var(--rule);
+      padding: .4rem 0 .4rem 1.75rem;
+    }
+  }
+  .portrait {
+    width: clamp(6.5rem, 11vw, 8.25rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--portrait-disc);
+    border: 4px solid var(--portrait-ring);
+    box-shadow: 0 0 0 1px var(--rule);
+    overflow: hidden;
+    display: grid;
+    place-items: end center;
+  }
+  .portrait img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 32%;
+  }
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/13472716"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+  .rail dl { margin: 0; display: grid; gap: .3rem; }
+  .rail dd {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: .82rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/13479447"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+  /* ---------- ticker de stack ---------- */
 
-No obstante, se puede apreciar que <u>la gran mayoría de afectados por problemas de salud mental no intentan buscar ayuda de forma proactiva y determinante.</u>
+  .stack { border-block: 1px solid var(--rule); background: var(--surface); }
 
-<h2>Análisis del perfil de empresa de los encuestados:</h2>
+  .ticker {
+    overflow: hidden;
+    padding-block: .85rem;
+    border-bottom: 1px solid var(--rule);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: slide 62s linear infinite;
+  }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+  .ticker-track span {
+    font-family: var(--f-mono);
+    font-size: .8rem;
+    letter-spacing: .06em;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    padding-inline: 1rem;
+  }
+  .ticker-track span::after {
+    content: "/";
+    margin-left: 1rem;
+    color: var(--accent);
+  }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/13451965"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+  .stack-note {
+    display: grid;
+    gap: .7rem;
+    padding-block: 1.4rem 1.7rem;
+  }
+  .plate-note {
+    margin: 0;
+    max-width: 46rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+  .plate-note em { font-style: normal; color: var(--ink); }
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/13480101"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+  /* ---------- secciones ---------- */
 
-<u>Parece que cuanto mayor es la empresa, más probabilidad de afectación por salud mental hay.</u>
+  section.band { border-bottom: 1px solid var(--rule); }
+  section.band > .wrap { padding-block: clamp(3rem, 7vw, 5.5rem); }
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/13480162"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+  .section-head {
+    display: grid;
+    gap: .9rem;
+    margin-bottom: 2.5rem;
+  }
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    letter-spacing: -.035em;
+    line-height: 1.05;
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+    text-wrap: balance;
+    margin: 0;
+    max-width: 22ch;
+  }
 
-No hay una evidencia clara, pero podría decirse que <u>el trabajo remoto disiminuye la tasa de problemas de salud mental</u> ¿Será trabajo híbrido o full remoto?
+  .prose { max-width: var(--measure); display: grid; gap: 1.15rem; }
+  .prose p { margin: 0; }
 
-</html><div class="flourish-embed flourish-chart" data-src="visualisation/13480190"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+  .pull {
+    max-width: 30rem;
+    font-family: var(--f-display);
+    font-weight: 300;
+    letter-spacing: -.02em;
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    line-height: 1.28;
+    color: var(--ink);
+    margin: 0;
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--accent);
+    text-wrap: pretty;
+  }
 
-Tampoco se puede concluir con claridad que las compaías tecnológicas propicien los problemas de salud mental, de hecho, hay una ligera mayor proporción de afectados en las no tecnológicas.
+  .two-col {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  @media (min-width: 54rem) {
+    .two-col { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
 
-<h2>Conclusiones:</h2>
+  /* tarjetas de servicio */
+  .cards {
+    display: grid;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  @media (min-width: 48rem) {
+    .cards { grid-template-columns: repeat(3, 1fr); }
+  }
+  .card {
+    background: var(--surface);
+    padding: 1.6rem 1.5rem 1.9rem;
+    display: grid;
+    gap: .7rem;
+    align-content: start;
+  }
+  .card h3 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    letter-spacing: -.025em;
+    font-size: 1.12rem;
+    margin: 0;
+  }
+  .card p { margin: 0; font-size: .97rem; color: var(--ink-soft); }
 
-<p>Existe una mayor prevalencia de problemas de salud mental en el sector tecnológico en Estados Unidos, encontrando que los jóvenes adultos, especialmente entre los 28 y 33 años, enfrentan mayores dificultades en términos de salud mental, en parte debido a la competitividad socioeconómica y la búsqueda de estabilidad laboral en un entorno postcrisis económica. Además, la falta de conocimiento sobre las herramientas y recursos disponibles para la prevención y neutralización de problemas de salud mental indica una posible falta de comunicación por parte de las empresas.</p>
-<p>Para abordar estos problemas, se podrían implementar las siguientes políticas y soluciones:</p>
-<ul>
-    <li>Fortalecer la comunicación y difusión de los recursos y servicios de apoyo en salud mental disponibles en el ámbito laboral, asegurándose de que tanto empleados afectados como no afectados estén al tanto de las opciones disponibles.</li>
-    <li>Fomentar un entorno laboral saludable y flexible que incluya opciones de trabajo remoto, híbrido o con horarios flexibles, permitiendo a los empleados mantener un equilibrio entre su vida laboral y personal y reducir el estrés y la presión en el trabajo.</li>
-    <li>Implementar programas de capacitación y concientización sobre salud mental para empleados y directivos, con el objetivo de promover la comprensión y la empatía hacia los compañeros de trabajo que puedan enfrentar problemas de salud mental, así como destigmatizar estos problemas en el lugar de trabajo.</li>
-    <li>Establecer sistemas de seguimiento y evaluación del bienestar de los empleados, permitiendo identificar a tiempo posibles problemas de salud mental y brindar apoyo y recursos adecuados.</li>
-    <li>Fomentar la búsqueda proactiva de ayuda entre los empleados afectados, promoviendo la importancia de buscar apoyo y tratamiento cuando sea necesario, y asegurándose de que los empleados se sientan cómodos al comunicar sus necesidades de salud mental a sus empleadores.</li>
-    <li>Promover una cultura organizacional inclusiva y de apoyo, donde la salud mental sea una prioridad y los empleados se sientan respaldados y valorados, independientemente del tamaño y tipo de empresa en la que trabajen.</li>
-</ul>
-<p>Implementando estas políticas y soluciones, las empresas podrían mejorar significativamente el bienestar de sus empleados, reducir la incidencia de problemas de salud mental en el ámbito laboral y, en última instancia, aumentar la satisfacción y productividad de sus trabajadores.</p>
+  /* modalidades */
+  .modes { display: grid; gap: 1px; background: var(--rule); border-block: 1px solid var(--rule); }
+  .mode {
+    background: var(--paper);
+    display: grid;
+    gap: .5rem 2rem;
+    padding: 1.4rem 0;
+    align-items: baseline;
+  }
+  @media (min-width: 48rem) {
+    .mode { grid-template-columns: 13rem minmax(0, 1fr); }
+  }
+  .mode h3 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  .mode p { margin: 0; color: var(--ink-soft); font-size: .99rem; max-width: 42ch; }
+
+  /* ---------- contacto ---------- */
+
+  .contact > .wrap { padding-block: clamp(3.5rem, 8vw, 6rem); }
+  .contact h2 { max-width: 16ch; }
+  .contact-inner {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+  }
+  @media (min-width: 54rem) {
+    .contact-inner { grid-template-columns: minmax(0, 1fr) auto; }
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .8rem;
+    text-decoration: none;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--f-display);
+    font-weight: 700;
+    letter-spacing: -.015em;
+    font-size: 1.05rem;
+    padding: .95rem 1.6rem;
+    transition: transform .18s ease, filter .18s ease;
+  }
+  .cta:hover { transform: translateY(-2px); filter: saturate(1.15); }
+  .cta .arrow { transition: transform .18s ease; }
+  .cta:hover .arrow { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) {
+    .cta, .cta .arrow { transition: none; }
+    .cta:hover { transform: none; }
+    .cta:hover .arrow { transform: none; }
+  }
+
+  .cta-stack {
+    display: grid;
+    justify-items: start;
+    gap: .95rem;
+  }
+  .cta-alt {
+    font-family: var(--f-mono);
+    font-size: .84rem;
+    letter-spacing: .02em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: .12rem;
+    transition: color .18s ease, border-color .18s ease;
+  }
+  .cta-alt:hover { color: var(--ink); border-color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { .cta-alt { transition: none; } }
+
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem 1.5rem;
+    justify-content: space-between;
+    padding-block: 1.6rem 2.4rem;
+  }
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <p class="wordmark">Guzmán&nbsp;GP</p>
+    <p class="label status"><span class="dot"></span>Abierto a proyectos</p>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="label">Freelance · IA, datos y backend</p>
+      <h1>Te ayudo a crear<span class="cont">tu solución digital<span class="cursor"></span></span></h1>
+      <p class="lede">Llevo más de <strong>8 años</strong> trabajando codo con codo con el software. He contribuido a muchas soluciones de IA en entornos corporativos, he sido ingeniero de IA en interfaces conversacionales, consultor de ciencia de datos y desarrollador backend senior.</p>
+    </div>
+
+    <div class="rail">
+      <div class="portrait"><img src="avatar.png" width="460" height="460" alt="Avatar ilustrado de Guzmán GP"></div>
+      <dl>
+        <dt class="label">Ahora</dt>
+        <dd>BBVA — Departamento de IA</dd>
+      </dl>
+      <dl>
+        <dt class="label">Experiencia</dt>
+        <dd>8+ años</dd>
+      </dl>
+      <dl>
+        <dt class="label">Modalidad</dt>
+        <dd>Proyecto · Suscripción · Socio</dd>
+      </dl>
+      <dl>
+        <dt class="label">Contacto</dt>
+        <dd><a href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><br><a href="mailto:guzmangomezp1@gmail.com">guzmangomezp1@gmail.com</a></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="stack">
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>MCP</span><span>agentes</span><span>RAG</span><span>LLMs</span><span>FastAPI</span><span>workflows</span><span>harnesses</span><span>escalabilidad</span><span>pipelines de datos</span><span>embeddings</span><span>spec-driven development</span><span>Claude Code</span><span>evaluación de LLM</span><span>vector stores</span><span>orquestación</span><span>APIs</span><span>automatización</span><span>generación de vídeo</span><span>generación de imágenes</span><span>avatares</span>
+      <span aria-hidden="true">MCP</span><span aria-hidden="true">agentes</span><span aria-hidden="true">RAG</span><span aria-hidden="true">LLMs</span><span aria-hidden="true">FastAPI</span><span aria-hidden="true">workflows</span><span aria-hidden="true">harnesses</span><span aria-hidden="true">escalabilidad</span><span aria-hidden="true">pipelines de datos</span><span aria-hidden="true">embeddings</span><span aria-hidden="true">spec-driven development</span><span aria-hidden="true">Claude Code</span><span aria-hidden="true">evaluación de LLM</span><span aria-hidden="true">vector stores</span><span aria-hidden="true">orquestación</span><span aria-hidden="true">APIs</span><span aria-hidden="true">automatización</span><span aria-hidden="true">generación de vídeo</span><span aria-hidden="true">generación de imágenes</span><span aria-hidden="true">avatares</span>
+    </div>
+  </div>
+  <div class="wrap stack-note">
+    <p class="label">Del ruido diario a algo que funciona</p>
+    <p class="plate-note">Busco <em>soluciones simples</em>: evito los grandes workflows montados sobre programas con una curva de aprendizaje alta. Scripts, servidores escalables, bases de datos y conexiones API — lo imprescindible para que tu lógica funcione.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap two-col">
+    <div class="section-head" style="margin-bottom:0">
+      <p class="label">El ritmo</p>
+      <h2>Nadie lo conoce todo. Yo tampoco.</h2>
+    </div>
+    <div class="prose">
+      <p class="pull">Es difícil seguir el ritmo a la cantidad de novedades digitales que salen cada día.</p>
+      <p>Ni yo mismo soy capaz de conocerlo todo. Lo que nunca me ha faltado es el tiempo y las ganas de conocer estas herramientas y ponerlas en práctica.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">En qué puedo ayudarte</p>
+      <h2>Tres terrenos que conozco de primera mano.</h2>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <h3>Soluciones de IA</h3>
+        <p>He contribuido a soluciones de IA en entornos corporativos, donde lo que se pide no es una demo sino algo que aguante en producción.</p>
+      </article>
+      <article class="card">
+        <h3>Ciencia de datos</h3>
+        <p>Como consultor: entender los datos que ya tienes, sacarles una respuesta útil y saber cuándo el modelo no es la respuesta.</p>
+      </article>
+      <article class="card">
+        <h3>Backend</h3>
+        <p>Desarrollo backend senior. La parte que nadie ve y de la que depende que todo lo demás funcione.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Cómo trabajamos</p>
+      <h2>Tú eliges la fórmula.</h2>
+    </div>
+    <div class="modes">
+      <div class="mode">
+        <h3>Pago por proyecto</h3>
+        <p>Tienes algo concreto en mente, acotado, definido, con principio y final. Lo dimensionamos y lo construyo.</p>
+      </div>
+      <div class="mode">
+        <h3>Suscripción mensual</h3>
+        <p>¿Necesitas a alguien de forma continuada o tienes una idea difusa? Evolucionamos el producto, lo iteramos o lo mantenemos, resolviendo lo que aparezca.</p>
+      </div>
+      <div class="mode">
+        <h3>Como socio</h3>
+        <p>Si me convences ;) — entro en la idea y remamos juntos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div class="section-head" style="margin-bottom:0">
+        <p class="label">Contacto</p>
+        <h2>Si tienes alguna idea en mente, escríbeme.</h2>
+        <p class="lede" style="margin-top:.4rem">Actualmente trabajo en BBVA, en el departamento de IA. En mis ratos libres cojo algún que otro proyectillo.</p>
+      </div>
+      <div class="cta-stack">
+        <a class="cta" href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer">
+          Hablemos por LinkedIn <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="cta-alt" href="mailto:guzmangomezp1@gmail.com">o escríbeme a guzmangomezp1@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="label">Guzmán GP · IA, datos y backend</p>
+    <p class="label"><a href="https://www.linkedin.com/in/guzman-gp/" target="_blank" rel="noopener noreferrer">linkedin.com/in/guzman-gp</a> · <a href="mailto:guzmangomezp1@gmail.com">guzmangomezp1@gmail.com</a></p>
+  </div>
+</footer>
+
 </body>
 </html>
