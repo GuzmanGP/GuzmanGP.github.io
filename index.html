@@ -422,9 +422,18 @@
   .carousel-nav {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
   }
-  .carousel-count { min-width: 4ch; }
+  .carousel-count {
+    min-width: 4ch;
+    text-align: center;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: .45em;
+  }
   .carousel-btn {
     font: inherit;
     font-size: 1rem;
