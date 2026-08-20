@@ -502,6 +502,24 @@
   }
   .modal-text { display: grid; gap: .9rem; }
   .modal-text p { margin: 0; color: var(--ink-soft); }
+  /* El enlace a la demo: lo único accionable del detalle, así que se ve como un botón
+     y no como una línea más de texto. */
+  .modal-text .demo-link {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: .3rem;
+    padding: .7rem 1.1rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: .92rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .modal-text .demo-link:hover { filter: brightness(1.12); }
+  .modal-text .demo-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .modal-close {
     position: sticky;
     top: 0;
@@ -934,7 +952,7 @@
             <button class="slide-more" type="button" data-en="See detail">Ver detalle</button>
           </div>
         </article>
-        <article class="slide" data-detail="<p>Un cuestionario que no es un formulario fijo: se adapta a lo que responde cada persona y cambia según la especialidad.</p><p>Si una respuesta abre una vía relevante, profundiza; si no, sigue adelante. La idea es que el paciente llegue a la consulta con su historia ya recogida y que la primera media hora no se vaya en preguntas de trámite.</p><p>El guion clínico es dato editable, no código: fases, preguntas y condiciones para saltar de una a otra viven en un fichero que quien sabe de medicina puede cambiar sin tocar el sistema, y queda versionado como cualquier otro contenido.</p><p>Al terminar, las respuestas no se entregan como una transcripción sino ordenadas por bloques, listas para incorporarse a la historia. Y nada se da por bueno sin revisión humana: el sistema recoge, la consulta decide.</p>" data-detail-en="<p>A questionnaire that is not a fixed form: it adapts to each answer and shifts by speciality.</p><p>If an answer opens a relevant path it digs deeper; if not, it moves on. The point is for patients to arrive with their history already gathered, so the first half hour is not spent on routine questions.</p><p>The clinical script is editable data, not code: stages, questions and the conditions for moving between them live in a file that whoever knows the medicine can change without touching the system, versioned like any other content.</p><p>At the end the answers are not handed over as a transcript but sorted into blocks, ready to join the record. And nothing is accepted without human review: the system gathers, the practice decides.</p>">
+        <article class="slide" data-detail="<p>Un cuestionario que no es un formulario fijo: se adapta a lo que responde cada persona y cambia según la especialidad.</p><p>Si una respuesta abre una vía relevante, profundiza; si no, sigue adelante. La idea es que el paciente llegue a la consulta con su historia ya recogida y que la primera media hora no se vaya en preguntas de trámite.</p><p>El guion clínico es dato editable, no código: fases, preguntas y condiciones para saltar de una a otra viven en un fichero que quien sabe de medicina puede cambiar sin tocar el sistema, y queda versionado como cualquier otro contenido.</p><p>Al terminar, las respuestas no se entregan como una transcripción sino ordenadas por bloques, listas para incorporarse a la historia. Y nada se da por bueno sin revisión humana: el sistema recoge, la consulta decide.</p><p><a class='demo-link' href='onboarding/' target='_blank' rel='noopener'>Probar la demo →</a></p>" data-detail-en="<p>A questionnaire that is not a fixed form: it adapts to each answer and shifts by speciality.</p><p>If an answer opens a relevant path it digs deeper; if not, it moves on. The point is for patients to arrive with their history already gathered, so the first half hour is not spent on routine questions.</p><p>The clinical script is editable data, not code: stages, questions and the conditions for moving between them live in a file that whoever knows the medicine can change without touching the system, versioned like any other content.</p><p>At the end the answers are not handed over as a transcript but sorted into blocks, ready to join the record. And nothing is accepted without human review: the system gathers, the practice decides.</p><p><a class='demo-link' href='onboarding/' target='_blank' rel='noopener'>Try the demo →</a></p>">
           <div class="slide-media"><img src="p3.jpg" width="1024" height="576" alt="Un árbol de decisión que se ramifica desde un punto"></div>
           <div class="slide-body">
             <h3 data-en="AI-guided onboarding">Onboarding conducido por IA</h3>
